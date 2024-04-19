@@ -5,6 +5,7 @@ import 'package:flutterchatapp/Themes/cubit/theme_cubit.dart';
 import 'package:flutterchatapp/repository/Settings/settings_interface.dart';
 import 'package:flutterchatapp/routes.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:sizer/sizer.dart';
 
 Future<void> main() async{
     WidgetsFlutterBinding.ensureInitialized();
@@ -28,12 +29,16 @@ class MyApp extends StatelessWidget {
       ],
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) {
-          return MaterialApp(
-          theme: state.brightness == Brightness.light ? lightTheme : darkTheme,
-          debugShowCheckedModeBanner: false,
-          routes: routes,
-          initialRoute: '/ChatPage',
-          );
+            return Sizer(
+              builder: (context, orientation, deviceType){
+              return MaterialApp(
+              theme: state.brightness == Brightness.light ? lightTheme : darkTheme,
+              debugShowCheckedModeBanner: false,
+              routes: routes,
+              initialRoute: '/ChatPage',
+              );
+              }
+            );
         },
       ),
     );

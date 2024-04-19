@@ -1,4 +1,4 @@
-import 'package:flutterchatapp/chat/chat_page.dart';
+import 'package:flutterchatapp/chat/chats_page.dart';
 
 final routes = {
   '/ChatPage':(context) => ChatPage()
