@@ -17,17 +17,15 @@ class _ChatPageState extends State<ChatPage> {
   final usermodel = GetIt.I<AbstractChatModel>();
   @override
   void initState() {
-    usermodel.initializeUsers();
-    setState(() {
-      usermodel.users;
-    });
     super.initState(); 
+    usersinit();
   }
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
       appBar: AppBar(
+        automaticallyImplyLeading: false,
         title: Text(
           'Чаты',style: theme.textTheme.labelMedium,
         ),
@@ -43,12 +41,16 @@ class _ChatPageState extends State<ChatPage> {
                 decoration: searchFieldDecoration('Найти человека'),
               ),
             ),
+            SizedBox(
+              height: 2.h,
+            ),
             Expanded(child: GridView.builder(
               gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                 crossAxisCount: 1,
                 childAspectRatio: 3.5,
                 crossAxisSpacing: 10,
                 mainAxisSpacing: 15),
+                itemCount: 6,
                itemBuilder: userListBuilder))
           ],
         ),
@@ -100,5 +102,11 @@ class _ChatPageState extends State<ChatPage> {
         ),
       )
     );
+  }
+  void usersinit () async{
+    usermodel.initializeUsers();
+    setState(() {
+      usermodel.users;
+    });
   }
 }

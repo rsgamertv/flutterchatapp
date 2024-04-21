@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:flutterchatapp/Model/UserModel/abstract_user_model.dart';
 import 'package:flutterchatapp/Model/abstract_chat_model.dart';
 import 'package:flutterchatapp/main.dart';
 import 'package:get_it/get_it.dart';
@@ -17,9 +18,9 @@ final Dio dio;
     userslist.forEach((user) {
       ChatModel userToAdd = ChatModel(dio: Dio());
       userToAdd.id = user['id'];
-      userToAdd.email = userToAdd.email;
+      userToAdd.email = user['email'];
       userToAdd.name = user['name'];
-      if(userToAdd.id != GetIt.I<AbstractChatModel>().id){
+      if(userToAdd.id != GetIt.I<AbstractUserModel>().id){
         users.add(userToAdd);
       }
     });

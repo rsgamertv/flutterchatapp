@@ -1,5 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterchatapp/Authorization/bloc/bloc/authorization_bloc.dart';
+import 'package:flutterchatapp/Model/UserModel/abstract_user_model.dart';
+import 'package:flutterchatapp/Model/UserModel/user_model.dart';
 import 'package:flutterchatapp/Model/abstract_chat_model.dart';
 import 'package:flutterchatapp/Model/chat_model.dart';
 import 'package:flutterchatapp/Themes/theme.dart';
@@ -16,6 +19,7 @@ Future<void> main() async{
     WidgetsFlutterBinding.ensureInitialized();
     final prefs = await SharedPreferences.getInstance();
     GetIt.I.registerLazySingleton<AbstractChatModel>(() => ChatModel(dio: Dio()));
+    GetIt.I.registerLazySingleton<AbstractUserModel>(() => UserModel(dio: Dio()));
     runApp(MyApp(
       preferences: prefs,
     ));
@@ -32,6 +36,7 @@ class MyApp extends StatelessWidget {
         BlocProvider(
           create: (context) => ThemeCubit(repository: repo),
         ),
+        BlocProvider(create: (context) => AuthorizationBloc())
       ],
       child: BlocBuilder<ThemeCubit, ThemeState>(
         builder: (context, state) {
@@ -41,7 +46,7 @@ class MyApp extends StatelessWidget {
               theme: state.brightness == Brightness.light ? lightTheme : darkTheme,
               debugShowCheckedModeBanner: false,
               routes: routes,
-              initialRoute: '/ChatPage',
+              initialRoute: '/Authorization',
               );
               }
             );

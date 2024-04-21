@@ -30,7 +30,17 @@ final lightTheme = ThemeData(
           labelSmall: TextStyle(
             fontSize: 10,
             color: Colors.black87
-          )
+          ),
+          displayMedium: TextStyle(
+            fontSize: 20,
+            color: Colors.black,
+            fontWeight: FontWeight.w500
+          ),
+          displayLarge: TextStyle(
+            fontSize: 24,
+            color: Colors.black,
+            fontWeight: FontWeight.w600
+          ),
         )
 );
 final darkTheme = ThemeData(
@@ -62,6 +72,21 @@ final darkTheme = ThemeData(
           labelSmall: TextStyle(
             fontSize: 10,
             color: Colors.white
-          )
+          ),
+          displaySmall: TextStyle(
+            fontSize: 14,
+            color: Colors.white,
+            fontWeight: FontWeight.w500,
+          ),
+          displayMedium: TextStyle(
+            fontSize: 20,
+            color: Colors.white,
+            fontWeight: FontWeight.w500
+          ),
+          displayLarge: TextStyle(
+            fontSize: 24,
+            color: Colors.white,
+            fontWeight: FontWeight.w600
+          ),
         )
 );
