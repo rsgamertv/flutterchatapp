@@ -57,7 +57,7 @@ class UserModel extends AbstractUserModel{
     return true;}
     Future<void> initializeUsers() async {
     final response = await Dio().get(
-      'http://$ip/users/'
+      'http://$ip/users/all'
     );
     final data = response.data as Map<String, dynamic>;
 

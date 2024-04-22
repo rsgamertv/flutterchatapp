@@ -86,7 +86,8 @@ class _ChatPageState extends State<ChatPage> {
       ),
       ),
     );
-  }  Future<void> _initAllMessages() async{
+  } 
+   Future<void> _initAllMessages() async{
     messages.clear();
 
     var response = await Dio().get(
@@ -101,6 +102,7 @@ class _ChatPageState extends State<ChatPage> {
             MessageModel(user_id: msg['user_id'], message: msg['message'])
         );
       }
+      print(msg);
     });
   }
   @override
