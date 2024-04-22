@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 final lightTheme = ThemeData(
-   primaryColor: Colors.blueAccent,
+   primaryColor: const Color.fromARGB(255, 158, 53, 177).withAlpha(10),
         cardColor: Colors.white,
         canvasColor: Colors.white,
         dividerColor: Colors.blueAccent,
@@ -44,7 +44,7 @@ final lightTheme = ThemeData(
         )
 );
 final darkTheme = ThemeData(
-          primaryColor: Colors.blueAccent,
+        primaryColor: const Color.fromARGB(255, 158, 53, 177).withAlpha(10),
         errorColor: Color.fromRGBO(0, 27, 59, 1),
         hoverColor: Color.fromRGBO(0, 27, 59, 1),
         canvasColor: Color.fromRGBO(0, 13, 29, 1),
