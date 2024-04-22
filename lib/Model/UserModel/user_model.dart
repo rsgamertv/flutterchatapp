@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'package:dio/dio.dart';
 import 'package:flutterchatapp/Model/UserModel/abstract_user_model.dart';
 import 'package:flutterchatapp/main.dart';
+import 'package:get_it/get_it.dart';
 
 class UserModel extends AbstractUserModel{
   final Dio dio;
@@ -54,5 +55,25 @@ class UserModel extends AbstractUserModel{
     final jsonResponse = response.data as Map<String,dynamic>;
 
     return true;}
+    Future<void> initializeUsers() async {
+    final response = await Dio().get(
+      'http://$ip/users/'
+    );
+    final data = response.data as Map<String, dynamic>;
+
+    final userslist = data['data'] as List<dynamic>;
+
+    userslist.forEach((user) {
+      UserModel userToAdd = UserModel(dio: Dio());
+      userToAdd.id = user['id'];
+      userToAdd.email = user['email'];
+      userToAdd.name = user['name'];
+
+      if(userToAdd.id != GetIt.I<AbstractUserModel>().id){
+        users.add(userToAdd);
+      }
+    });
+
+  }
 
 }

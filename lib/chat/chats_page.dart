@@ -1,20 +1,23 @@
+import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutterchatapp/Model/abstract_chat_model.dart';
-import 'package:flutterchatapp/Model/chat_model.dart';
+import 'package:flutterchatapp/Model/UserModel/abstract_user_model.dart';
+import 'package:flutterchatapp/Model/UserModel/user_model.dart';
 import 'package:flutterchatapp/Themes/style.dart';
+import 'package:flutterchatapp/chat/chat_page.dart';
+import 'package:flutterchatapp/main.dart';
 import 'package:get_it/get_it.dart';
 import 'package:sizer/sizer.dart';
 
-class ChatPage extends StatefulWidget {
-  const ChatPage({super.key});
+class ChatsPage extends StatefulWidget {
+  const ChatsPage({super.key});
 
   @override
-  State<ChatPage> createState() => _ChatPageState();
+  State<ChatsPage> createState() => _ChatPageState();
 }
 
-class _ChatPageState extends State<ChatPage> {
-  final usermodel = GetIt.I<AbstractChatModel>();
+class _ChatPageState extends State<ChatsPage> {
+  final usermodel = GetIt.I<AbstractUserModel>();
   @override
   void initState() {
     super.initState(); 
@@ -61,10 +64,11 @@ class _ChatPageState extends State<ChatPage> {
       if(id >= usermodel.users.length){
       return Container();
     }
-    ChatModel user = usermodel.users[id];
+    UserModel user = usermodel.users[id];
 
     return GestureDetector(
-      onTap: (){  
+      onTap: (){ 
+        goToChat(user); 
         },
       child: Container(
         decoration: BoxDecoration(
@@ -80,7 +84,6 @@ class _ChatPageState extends State<ChatPage> {
             Expanded(child: Container(),flex: 5,),
             Expanded(child: CircleAvatar(
               radius: 35,
-              backgroundImage: AssetImage('assets/manimage.png'),
             ),flex: 20,),
             Expanded(child: Container(),flex: 3,),
             Expanded(child: Container(
@@ -104,9 +107,28 @@ class _ChatPageState extends State<ChatPage> {
     );
   }
   void usersinit () async{
-    usermodel.initializeUsers();
+    await usermodel.initializeUsers();
     setState(() {
       usermodel.users;
     });
+  }
+    void goToChat(UserModel otherUser) async{
+    var json = {
+      'data': [
+      GetIt.I<AbstractUserModel>().id ,
+      otherUser.id
+      ]
+    };
+
+    final response = await Dio().post(
+      'http://${ip}/chats/', data: json
+    );
+
+    final data = response.data as Map<String, dynamic>;
+    final room_id = data['data']['room_id'];
+
+    Navigator.push(context, 
+    MaterialPageRoute(builder: (context) => ChatPage(room_id , otherUser))
+    );
   }
 }
