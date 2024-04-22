@@ -137,18 +137,27 @@ class _ChatPageState extends State<ChatPage> {
             color: color,
             child: Column(
               children: [
-                  Text(name!,
-                  textAlign: TextAlign.left,
-                  style: TextStyle(
-                    color: Colors.white54,
-                    fontSize: 10.sp,
-                    fontWeight: FontWeight.w600
-                  ),
-                  ),
-                Text(message.message, style: TextStyle(
+                  Container(
+                    constraints: BoxConstraints(maxWidth: size.width * 0.66),
+                    decoration: BoxDecoration(
+                    ),
+                    child: Column(
+                      children: [
+                        Text(name!,
+                        textAlign: TextAlign.left,
+                        style: TextStyle(
+                          color: Colors.white54,
+                          fontSize: 10.sp,
+                          fontWeight: FontWeight.w600
+                        ),
+                        ),
+                  Text(message.message, style: TextStyle(
                   color: Colors.white,
                   fontSize: 13.sp
                 ),),
+                      ],
+                    ),
+                  ),
               ],
             )
         
