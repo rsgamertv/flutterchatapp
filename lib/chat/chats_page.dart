@@ -127,9 +127,9 @@ class _ChatPageState extends State<ChatsPage> {
 
     final data = response.data as Map<String, dynamic>;
     final room_id = data['data']['room_id'];
-
     Navigator.push(context, 
-    MaterialPageRoute(builder: (context) => ChatPage(room_id , otherUser))
+    MaterialPageRoute(builder: (context) => ChatPage(room_id , otherUser), )
     );
+
   }
 }

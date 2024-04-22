@@ -2,6 +2,8 @@ import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
+import 'package:flutterchatapp/Model/ChatModel/abstract_chat_model.dart';
+import 'package:flutterchatapp/Model/ChatModel/chat_model.dart';
 import 'package:flutterchatapp/Model/UserModel/abstract_user_model.dart';
 import 'package:flutterchatapp/Model/UserModel/user_model.dart';
 import 'package:flutterchatapp/Model/message_model.dart';
@@ -23,6 +25,7 @@ class ChatPage extends StatefulWidget {
   }
 }
 class _ChatPageState extends State<ChatPage> {
+  final ChatModel model = ChatModel();
   final ScrollController controller = ScrollController();
   TextEditingController textcontroller = TextEditingController();
   late WebSocketChannel _channel;
@@ -41,7 +44,7 @@ class _ChatPageState extends State<ChatPage> {
     @override
     void initState() {
       super.initState();
-      _initAllMessages();
+      initmessage();
        _channel.stream.listen((event) async{
     if(event.toString().length > 0){
         var data = event.toString();
@@ -156,29 +159,13 @@ class _ChatPageState extends State<ChatPage> {
     );
 
   }
-   Future<void> _initAllMessages() async{
-    messages.clear();
-
-    var response = await Dio().get(
-      'http://$ip/chats/$room_id'
-    );
-
-    List<dynamic> data = (response.data as Map<String, dynamic>)['data'];
-
-    data.forEach((msg) {
-      if(msg['message'].toString().length > 0) {
-        messages.add (
-            MessageModel(user_id: msg['user_id'], message: msg['message'])
-        );
-      }
-      setState(() {
-        messages;
-      });
-      
+  void initmessage () async{
+    await model.initAllMessages();
+    setState(() {
+      GetIt.I<AbstractChatModel>().messages;
     });
-      await Future.delayed(Duration(milliseconds: 100));
-
-      scrolldown();
+    await Future.delayed(Duration(milliseconds: 100));
+    scrolldown();
   }
   void sendMessage() {
     if(textcontroller.text.isNotEmpty){
