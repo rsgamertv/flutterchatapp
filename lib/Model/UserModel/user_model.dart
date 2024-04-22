@@ -55,25 +55,5 @@ class UserModel extends AbstractUserModel{
     final jsonResponse = response.data as Map<String,dynamic>;
 
     return true;}
-    Future<void> initializeUsers() async {
-    final response = await Dio().get(
-      'http://$ip/users/all'
-    );
-    final data = response.data as Map<String, dynamic>;
-
-    final userslist = data['data'] as List<dynamic>;
-
-    userslist.forEach((user) {
-      UserModel userToAdd = UserModel(dio: Dio());
-      userToAdd.id = user['id'];
-      userToAdd.email = user['email'];
-      userToAdd.name = user['name'];
-
-      if(userToAdd.id != GetIt.I<AbstractUserModel>().id){
-        users.add(userToAdd);
-      }
-    });
-
-  }
 
 }

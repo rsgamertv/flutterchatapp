@@ -1,6 +1,7 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutterchatapp/Model/ChatModel/abstract_chat_model.dart';
 import 'package:flutterchatapp/Model/UserModel/abstract_user_model.dart';
 import 'package:flutterchatapp/Model/UserModel/user_model.dart';
 import 'package:flutterchatapp/Themes/style.dart';
@@ -17,7 +18,7 @@ class ChatsPage extends StatefulWidget {
 }
 
 class _ChatPageState extends State<ChatsPage> {
-  final usermodel = GetIt.I<AbstractUserModel>();
+  final usermodel = GetIt.I<AbstractChatModel>();
   @override
   void initState() {
     super.initState(); 
