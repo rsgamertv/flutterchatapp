@@ -1,6 +1,8 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutterchatapp/Authorization/bloc/bloc/authorization_bloc.dart';
+import 'package:flutterchatapp/Model/ChatModel/abstract_chat_model.dart';
+import 'package:flutterchatapp/Model/ChatModel/chat_model.dart';
 import 'package:flutterchatapp/Model/UserModel/abstract_user_model.dart';
 import 'package:flutterchatapp/Model/UserModel/user_model.dart';
 import 'package:flutterchatapp/Themes/theme.dart';
@@ -17,6 +19,7 @@ Future<void> main() async{
     WidgetsFlutterBinding.ensureInitialized();
     final prefs = await SharedPreferences.getInstance();
     GetIt.I.registerLazySingleton<AbstractUserModel>(() => UserModel(dio: Dio()));
+    GetIt.I.registerLazySingleton<AbstractChatModel>(() => ChatModel());
     runApp(MyApp(
       preferences: prefs,
     ));
